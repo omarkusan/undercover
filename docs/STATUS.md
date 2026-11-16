@@ -1,8 +1,9 @@
 # Status
 
-The pilot is being built from `docs/PLAN.md`. Done so far: phase 1, the records.
+The pilot is being built from `docs/PLAN.md`. Done so far: phase 1, the records, and phase 2, the claim workflow and the payment rule.
 
 - `backend/`: FastAPI on SQLite (`backend/db.py`). The database is at `UNDERCOVER_DB`, by default `backend/undercover.db`, and is seeded from `data/` when empty, with every claim waiting. It serves the claims queue, each claim in full, policies, a customer's claim history and the handlers. It never returns a customer's contact details.
+- The claim workflow: a claim goes from waiting to in progress (`start_claim`), then to decided or, for an approval over $1,000, waiting for sign-off (`decide_claim`). The agent's steps are recorded with `add_step`. `pay_claim` pays only an approved claim, only its payout, only once, and never over $1,000. That payment is made when a handler signs off (`sign_off_claim`).
 - `agent/`: still the skeleton, the entry point `run(claim_id, thread_id)` with one tool that calls the health route
 - `dashboard/`: still the skeleton, one page that shows whether the backend is up
 - `e2e/`: one test of that page

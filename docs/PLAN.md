@@ -93,15 +93,15 @@ An unknown id returns 404. Invalid input returns 422. An operation the claim's s
 
 **Success criteria**
 
-- [ ] `uv run pytest backend` passes, with tests for every state change above and every refusal, including:
-  - [ ] Starting a decided claim returns 409.
-  - [ ] Deciding a claim that isn't in progress returns 409. A decision other than approve, decline or refer returns 422, and so does a decline with a payout above $0.00.
-  - [ ] Approving $1,000.00 exactly moves the claim to decided. Approving $1,000.01 moves it to waiting for sign-off.
-  - [ ] Paying a claim approved for $1,250.00 before sign-off returns 409 with a message that the payment needs a handler's sign-off, and no payment is recorded.
-  - [ ] Paying a different amount from the approved payout, paying twice, and paying a declined or referred claim each return 409.
-  - [ ] After a sign-off by HND-01, the claim is decided and paid $1,250.00, signed off by HND-01. Signing off a claim that isn't waiting for sign-off returns 409, and an unknown handler returns 404.
-- [ ] Against the dev backend with curl: start CLM-1002, approve $1,150.00, then try to pay $1,150.00. The payment returns 409 and the claim shows `waiting_for_sign_off` and unpaid. Sign off as HND-01, and the claim shows `decided`, paid $1,150.00. Then `npm run reset`.
-- [ ] `npm run check:python` passes with coverage of at least 80%.
+- [x] `uv run pytest backend` passes, with tests for every state change above and every refusal, including:
+  - [x] Starting a decided claim returns 409.
+  - [x] Deciding a claim that isn't in progress returns 409. A decision other than approve, decline or refer returns 422, and so does a decline with a payout above $0.00.
+  - [x] Approving $1,000.00 exactly moves the claim to decided. Approving $1,000.01 moves it to waiting for sign-off.
+  - [x] Paying a claim approved for $1,250.00 before sign-off returns 409 with a message that the payment needs a handler's sign-off, and no payment is recorded.
+  - [x] Paying a different amount from the approved payout, paying twice, and paying a declined or referred claim each return 409.
+  - [x] After a sign-off by HND-01, the claim is decided and paid $1,250.00, signed off by HND-01. Signing off a claim that isn't waiting for sign-off returns 409, and an unknown handler returns 404.
+- [x] Against the dev backend with curl: start CLM-1002, approve $1,150.00, then try to pay $1,150.00. The payment returns 409 and the claim shows `waiting_for_sign_off` and unpaid. Sign off as HND-01, and the claim shows `decided`, paid $1,150.00. Then `npm run reset`.
+- [x] `npm run check:python` passes with coverage of at least 80%.
 
 ## Phase 3: The UnderCover Agent
 
