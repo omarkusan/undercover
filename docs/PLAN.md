@@ -120,15 +120,15 @@ An unknown id returns 404. Invalid input returns 422. An operation the claim's s
 
 **Success criteria**
 
-- [ ] `uv run pytest agent` passes, using a stub model and the backend's test client, never a real model:
-  - [ ] A scripted run on CLM-1001 calls `get_claim`, `get_policy` and `get_claim_history`, approves $420.00 and pays. The claim ends decided and paid $420.00, and `list_steps` has a step for each tool call, each result and the final reply.
-  - [ ] A scripted run that approves $1,250.00 and then calls `pay_claim` anyway leaves the claim waiting for sign-off and unpaid. The tool result the model receives says the payment needs a handler's sign-off.
-  - [ ] A scripted decline leaves the claim decided with a payout of $0.00 and no payment.
-  - [ ] The system prompt the agent receives is the text from `get_instructions`.
-  - [ ] `uv run -m agent CLM-1001` calls `run` with that claim (with `run` replaced in the test).
-- [ ] `curl -s localhost:8000/api/instructions` returns the instructions, followed by the policy wording, including "How we work out your payment".
-- [ ] One run with the real model: after `npm run reset`, with the dev backend running, `uv run -m agent CLM-1001` finishes. `GET /api/claims/CLM-1001` shows a decision, a payout, two or three sentences of reasons and a policy section, and `GET /api/claims/CLM-1001/steps` lists the agent's tool calls in order.
-- [ ] `npm run check:python` passes with coverage of at least 80%.
+- [x] `uv run pytest agent` passes, using a stub model and the backend's test client, never a real model:
+  - [x] A scripted run on CLM-1001 calls `get_claim`, `get_policy` and `get_claim_history`, approves $420.00 and pays. The claim ends decided and paid $420.00, and `list_steps` has a step for each tool call, each result and the final reply.
+  - [x] A scripted run that approves $1,250.00 and then calls `pay_claim` anyway leaves the claim waiting for sign-off and unpaid. The tool result the model receives says the payment needs a handler's sign-off.
+  - [x] A scripted decline leaves the claim decided with a payout of $0.00 and no payment.
+  - [x] The system prompt the agent receives is the text from `get_instructions`.
+  - [x] `uv run -m agent CLM-1001` calls `run` with that claim (with `run` replaced in the test).
+- [x] `curl -s localhost:8000/api/instructions` returns the instructions, followed by the policy wording, including "How we work out your payment".
+- [x] One run with the real model: after `npm run reset`, with the dev backend running, `uv run -m agent CLM-1001` finishes. `GET /api/claims/CLM-1001` shows a decision, a payout, two or three sentences of reasons and a policy section, and `GET /api/claims/CLM-1001/steps` lists the agent's tool calls in order.
+- [x] `npm run check:python` passes with coverage of at least 80%.
 
 ## Phase 4: The dashboard and the queue
 

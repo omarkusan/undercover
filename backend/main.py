@@ -5,6 +5,7 @@ import sqlite3
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Annotated, Any, Literal, Self
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -14,6 +15,8 @@ from backend import db
 
 Database = Annotated[sqlite3.Connection, Depends(db.database)]
 APPROVAL_LIMIT: float = db.read("company.json")["payout_approval_limit"]
+INSTRUCTIONS = Path(__file__).resolve().parent / "instructions.md"
+POLICY_WORDING = db.DATA / "policy_wording.md"
 STATES = {
     "waiting": "waiting",
     "in_progress": "in progress",
@@ -166,6 +169,14 @@ def list_handlers(connection: Database) -> list[dict[str, Any]]:
         {key: handler[key] for key in HANDLER}
         for handler in (json.loads(row["record"]) for row in rows)
     ]
+
+
+@app.get("/api/instructions", operation_id="get_instructions")
+def get_instructions() -> dict[str, str]:
+    """Get the agent's instructions, followed by the policy wording it works from."""
+    instructions = INSTRUCTIONS.read_text(encoding="utf-8")
+    wording = POLICY_WORDING.read_text(encoding="utf-8")
+    return {"instructions": f"{instructions}\n{wording}"}
 
 
 @app.post("/api/claims/{claim_id}/start", operation_id="start_claim")
