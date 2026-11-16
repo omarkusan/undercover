@@ -142,17 +142,17 @@ An unknown id returns 404. Invalid input returns 422. An operation the claim's s
 
 **Success criteria**
 
-- [ ] Vitest tests pass and cover the queue rows, the state counts, money formatting, the message when the backend is down, and the hash addresses for each page. Dashboard coverage is at least 80%.
-- [ ] `e2e/queue.spec.ts` passes: 25 claims listed, CLM-1001 Waiting, 25 in the Waiting tile, and clicking CLM-1001 opens `#/claims/CLM-1001`.
-- [ ] `npm run e2e` passes twice in a row, which shows each run starts from a fresh database.
-- [ ] `npm run check` passes with `npm run dev` running at the same time.
-- [ ] In the browser with the Playwright MCP server, at `localhost:5173` and 1280 pixels wide:
-  - [ ] The queue shows 25 claims, with no page-wide horizontal scroll.
-  - [ ] The computed styles show Instrument Sans for the body text and JetBrains Mono for claim ids and amounts.
-  - [ ] The state tiles and labels use Cerulean, Marigold, Coral and Sea Green with the text colors the brand specifies.
-  - [ ] With dark mode emulated, the page background is `#04232E` and panels are black.
-  - [ ] I take a screenshot in light mode and one in dark mode, and check them against `docs/BRAND.md`.
-- [ ] With the queue open, starting CLM-1003 with curl changes its row to In progress within 3 seconds, without reloading the page.
+- [x] Vitest tests pass and cover the queue rows, the state counts, money formatting, the message when the backend is down, and the hash addresses for each page. Dashboard coverage is at least 80%.
+- [x] `e2e/queue.spec.ts` passes: 25 claims listed, CLM-1001 Waiting, the state tiles add up to 25 and agree with the table, and clicking CLM-1001 opens `#/claims/CLM-1001`. (The plan first said 25 in the Waiting tile, but other e2e tests change claims in the same run.)
+- [x] `npm run e2e` passes twice in a row, which shows each run starts from a fresh database.
+- [x] `npm run check` passes with `npm run dev` running at the same time.
+- [x] In the browser with the Playwright MCP server, at `localhost:5173` and 1280 pixels wide:
+  - [x] The queue shows 25 claims, with no page-wide horizontal scroll.
+  - [x] The computed styles show Instrument Sans for the body text and JetBrains Mono for claim ids and amounts.
+  - [x] The state tiles and labels use Cerulean, Marigold, Coral and Sea Green with the text colors the brand specifies.
+  - [x] With dark mode emulated, the page background is `#04232E` and panels are black.
+  - [x] I take a screenshot in light mode and one in dark mode, and check them against `docs/BRAND.md`.
+- [x] With the queue open, starting CLM-1003 through the API changes its row to In progress within 3 seconds, without reloading the page. This is checked by an e2e test, so it doesn't change the dev data.
 
 ## Phase 5: The claim, the agent's steps, sign-off and the instructions
 
