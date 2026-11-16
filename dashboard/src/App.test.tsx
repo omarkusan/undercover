@@ -1,7 +1,13 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { App } from "./App";
-import { stubApi, waitingClaim } from "./testing";
+import {
+  claimRoutes,
+  fullClaim,
+  steps,
+  stubApi,
+  waitingClaim,
+} from "./testing";
 
 afterEach(() => {
   cleanup();
@@ -20,14 +26,18 @@ it("opens on the queue", async () => {
 });
 
 it("follows the address to a claim and to the instructions", async () => {
-  stubApi({ "/api/claims": [waitingClaim] });
+  stubApi({
+    "/api/claims": [waitingClaim],
+    "/api/instructions": { instructions: "You are the UnderCover Agent." },
+    ...claimRoutes(fullClaim, steps),
+  });
   render(<App />);
   act(() => {
-    window.location.hash = "#/claims/CLM-1001";
+    window.location.hash = "#/claims/CLM-1002";
     window.dispatchEvent(new HashChangeEvent("hashchange"));
   });
   expect(
-    await screen.findByRole("heading", { name: "CLM-1001" }),
+    await screen.findByRole("heading", { name: "CLM-1002" }),
   ).toBeDefined();
   act(() => {
     window.location.hash = "#/instructions";

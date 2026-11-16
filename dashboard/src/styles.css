@@ -74,6 +74,14 @@ h2 {
   font-size: 0.92em;
 }
 
+h1.mono {
+  font-size: 1.5rem;
+}
+
+td.mono {
+  white-space: nowrap;
+}
+
 .masthead {
   display: flex;
   align-items: baseline;
@@ -235,6 +243,202 @@ th.number {
 
 .muted {
   color: var(--muted);
+}
+
+.back {
+  margin: 0;
+}
+
+.claim-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.claim-summary {
+  margin: 8px 0 14px;
+  font-size: 1.05rem;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px 20px;
+  margin: 0;
+}
+
+.facts dt {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 2px 0 0;
+}
+
+.decision {
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.column {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.prose {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.panel .prose + .payment,
+.panel .facts + .prose {
+  margin-top: 14px;
+}
+
+.documents {
+  display: grid;
+  gap: 16px;
+}
+
+.documents article h3 {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.documents article h3 .muted {
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+tfoot th,
+tfoot td {
+  border-top: 1px solid var(--rule);
+  font-weight: 600;
+}
+
+.payment {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.payment p {
+  margin: 0;
+}
+
+.sign-off {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.sign-off label {
+  font-weight: 600;
+}
+
+select,
+button {
+  font: inherit;
+  border-radius: 10px;
+  padding: 7px 12px;
+}
+
+select {
+  border: 1px solid var(--rule);
+  background: var(--page);
+  color: var(--ink);
+}
+
+button {
+  border: 0;
+  background: var(--sea-green);
+  color: var(--midnight);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sign-off .alert {
+  flex-basis: 100%;
+}
+
+.steps {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 1.6em;
+}
+
+.steps li::marker {
+  font-family: var(--mono);
+  color: var(--muted);
+}
+
+.step-meta {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 0.8rem;
+}
+
+.step-kind {
+  font-weight: 600;
+}
+
+.steps p,
+.steps details {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.steps p.mono,
+.steps summary {
+  font-size: 0.82rem;
+}
+
+.steps summary {
+  cursor: pointer;
+}
+
+pre {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--page);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+pre.instructions {
+  margin: 0;
+  padding: 0;
+  background: none;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 800px) {

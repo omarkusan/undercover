@@ -1,5 +1,12 @@
 import { vi } from "vitest";
-import type { Claim, ClaimSummary } from "./api";
+import type {
+  Claim,
+  ClaimSummary,
+  Handler,
+  Policy,
+  PreviousClaim,
+  Step,
+} from "./api";
 
 /** Answer fetch from a table of paths, as the backend would. POSTs are keyed "POST /path". */
 export function stubApi(routes: Record<string, unknown>) {
@@ -71,3 +78,78 @@ export const fullClaim: Claim = {
   signed_off_at: null,
   paid_at: null,
 };
+
+export const policy: Policy = {
+  policy_id: "POL-2002",
+  plan: "premium",
+  add_ons: ["electronics_plus"],
+  purchased_on: "2026-05-02",
+  trip: {
+    destination: "Prague, Czech Republic",
+    departs_on: "2026-06-20",
+    returns_on: "2026-07-04",
+    trip_cost: 2600,
+  },
+  travelers: ["Tom Becker"],
+};
+
+export const history: PreviousClaim[] = [
+  {
+    claim_id: "CLM-0238",
+    filed_on: "2023-05-08",
+    claim_type: "trip_delay",
+    summary: "Seven hour delay leaving Chicago",
+    outcome: "approved",
+    amount_paid: 215,
+  },
+];
+
+export const handlers: Handler[] = [
+  {
+    handler_id: "HND-01",
+    name: "Dana Whitfield",
+    role: "Senior Claims Handler",
+    can_approve_over_limit: true,
+  },
+  {
+    handler_id: "HND-02",
+    name: "Marcus Oyelaran",
+    role: "Claims Handler",
+    can_approve_over_limit: false,
+  },
+];
+
+export const steps: Step[] = [
+  {
+    step_id: 1,
+    thread_id: "thread-1",
+    kind: "tool_call",
+    text: 'get_claim {"claim_id": "CLM-1002"}',
+    created_at: "2026-11-15T18:00:01+00:00",
+  },
+  {
+    step_id: 2,
+    thread_id: "thread-1",
+    kind: "tool_result",
+    text: `get_claim returned {"claim_id":"CLM-1002","story":"${"x".repeat(200)}"}`,
+    created_at: "2026-11-15T18:00:02+00:00",
+  },
+  {
+    step_id: 3,
+    thread_id: "thread-1",
+    kind: "message",
+    text: "Approved $1,150.00, waiting for sign-off.",
+    created_at: "2026-11-15T18:00:09+00:00",
+  },
+];
+
+/** The backend's answers for one claim's page. */
+export function claimRoutes(claim: Claim, claimSteps: Step[]) {
+  return {
+    [`/api/claims/${claim.claim_id}`]: claim,
+    [`/api/claims/${claim.claim_id}/steps`]: claimSteps,
+    [`/api/policies/${claim.policy_id}`]: policy,
+    [`/api/customers/${claim.customer_id}/claims`]: history,
+    "/api/handlers": handlers,
+  };
+}

@@ -170,13 +170,13 @@ An unknown id returns 404. Invalid input returns 422. An operation the claim's s
 
 **Success criteria**
 
-- [ ] Vitest tests pass for the claim page sections, the steps list, sign-off (which sends the chosen handler and shows the result), and the instructions page (which has no editable fields). Dashboard coverage stays at least 80%.
-- [ ] `e2e/claim.spec.ts` passes. The test drives CLM-1002 through the API the way the agent does: start, two steps, then approve $1,150.00. With the page open, the steps appear without a reload, and the claim shows Waiting for sign-off with a payout of $1,150.00. A payment through the API returns 409. Signing off in the page as Dana Whitfield changes the claim to Decided, paid $1,150.00, signed off by Dana Whitfield.
-- [ ] `e2e/instructions.spec.ts` passes: the instructions and the policy wording are shown, and the page has no input or text area.
-- [ ] In the browser with the Playwright MCP server, after the agent's real run on CLM-1001 from phase 3:
-  - [ ] The CLM-1001 page shows the story, items, documents, policy, claim history, decision and steps, in light and dark mode.
-  - [ ] The longest document and the longest tool result are readable without breaking the layout.
-- [ ] `npm run check` passes.
+- [x] Vitest tests pass for the claim page sections, the steps list, sign-off (which sends the chosen handler and shows the result), and the instructions page (which has no editable fields). Dashboard coverage stays at least 80%.
+- [x] `e2e/claim.spec.ts` passes. The test drives CLM-1002 through the API the way the agent does: start, two steps, then approve $1,150.00. With the page open, the steps appear without a reload, and the claim shows Waiting for sign-off with a payout of $1,150.00. A payment through the API returns 409. Signing off in the page as Dana Whitfield changes the claim to Decided, paid $1,150.00, signed off by Dana Whitfield.
+- [x] `e2e/instructions.spec.ts` passes: the instructions and the policy wording are shown, and the page has no input or text area.
+- [x] In the browser with the Playwright MCP server, after the agent's real run on CLM-1001 from phase 3:
+  - [x] The CLM-1001 page shows the story, items, documents, policy, claim history, decision and steps, in light and dark mode.
+  - [x] The longest document and the longest tool result are readable without breaking the layout.
+- [x] `npm run check` passes.
 
 ## Phase 6: Working the queue
 
