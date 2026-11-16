@@ -187,13 +187,13 @@ An unknown id returns 404. Invalid input returns 422. An operation the claim's s
 
 **Success criteria**
 
-- [ ] A test of the queue run (with `run` replaced) shows that it runs every waiting claim in order and skips decided ones.
-- [ ] With the real model, after `npm run reset`, `npm run agent` works through all 25 claims. The queue is open in the browser with the Playwright MCP server throughout.
-  - [ ] Claims move from Waiting to In progress to Decided or Waiting for sign-off without a reload. Opening a claim while it's being worked on shows its steps as they're added.
-  - [ ] When the run ends, `GET /api/claims` shows every claim decided or waiting for sign-off, each with a decision, reasons and a policy section.
-  - [ ] No claim has a payment over $1,000 without a sign-off.
-- [ ] Signing off one claim that is waiting for sign-off, in the browser, pays it and moves it to Decided.
-- [ ] `npm run check` passes, and I report the results.
+- [x] A test of the queue run (with `run` replaced) shows that it runs every waiting claim in order and skips decided ones.
+- [x] With the real model, after `npm run reset`, `npm run agent` works through all 25 claims. The queue is open in the browser with the Playwright MCP server throughout.
+  - [x] Claims move from Waiting to In progress to Decided or Waiting for sign-off without a reload. Opening a claim while it's being worked on shows its steps as they're added.
+  - [x] When the run ends, `GET /api/claims` shows every claim decided or waiting for sign-off, each with a decision, reasons and a policy section.
+  - [x] No claim has a payment over $1,000 without a sign-off.
+- [x] Signing off one claim that is waiting for sign-off, in the browser, pays it and moves it to Decided.
+- [x] `npm run check` passes, and I report the results.
 
 The agent's accuracy against the handlers' decisions isn't measured in this plan, because that needs `data/evals/`, which stays closed unless you ask. The run shows the system working end to end, not how often the agent is right.
 

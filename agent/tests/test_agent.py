@@ -122,20 +122,44 @@ def test_a_model_reply_with_text_and_tool_calls_is_two_steps():
     ]
 
 
-def test_the_command_line_runs_one_claim(client, monkeypatch, capsys):
+def fake_runs(client, monkeypatch):
+    """Replace the agent's run with one that only starts the claim."""
     runs = []
 
     def fake_run(claim_id, thread_id):
-        runs.append((claim_id, thread_id))
+        runs.append(claim_id)
         client.post(f"/api/claims/{claim_id}/start", json={"thread_id": thread_id})
         return "Still working."
 
     monkeypatch.setattr(main, "run", fake_run)
-    cli.decide("CLM-1001")
-    assert [claim_id for claim_id, _ in runs] == ["CLM-1001"]
+    return runs
+
+
+def test_the_command_line_runs_the_claims_given(client, monkeypatch, capsys):
+    runs = fake_runs(client, monkeypatch)
+    cli.main(["CLM-1005", "CLM-1001"])
+    assert runs == ["CLM-1005", "CLM-1001"]
     assert capsys.readouterr().out == (
-        "CLM-1001  no decision    in_progress\nStill working.\n"
+        "CLM-1005  no decision    in_progress\nCLM-1001  no decision    in_progress\n"
     )
+
+
+def test_the_command_line_works_through_the_waiting_claims(client, monkeypatch):
+    client.post("/api/claims/CLM-1001/start", json={"thread_id": "earlier"})
+    client.post(
+        "/api/claims/CLM-1001/decision",
+        json={
+            "decision": "decline",
+            "payout": 0,
+            "reasons": "Not covered.",
+            "policy_section": "Section 9, General exclusions",
+        },
+    )
+    runs = fake_runs(client, monkeypatch)
+    cli.main([])
+    queue = [claim["claim_id"] for claim in client.get("/api/claims").json()]
+    assert runs == queue[1:]
+    assert "CLM-1001" not in runs
 
 
 def test_the_summary_shows_the_payout():
